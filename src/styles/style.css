@@ -1,0 +1,7 @@
+.snake-game {
+    border: 5px solid blue;
+    height: 300px;
+    margin: 50px auto;
+    width: 300px;
+    position: relative;
+}
