@@ -18,16 +18,16 @@ class Point implements IPoint {
     if(direction === Direction.RIGHT) {
       this.x = this.x + (offset * 5);
     }
-    else if(direction == Direction.LEFT) {
+    else if(direction === Direction.LEFT) {
       this.x = this.x - (offset * 5);
     }
-    else if(direction == Direction.UP)
-    {
-      this.y = this.y + (offset * 5);
-    }
-    else if(direction == Direction.DOWN)
+    else if(direction === Direction.UP)
     {
       this.y = this.y - (offset * 5);
+    }
+    else if(direction === Direction.DOWN)
+    {
+      this.y = this.y + (offset * 5);
     }
   }
 

@@ -1,7 +1,30 @@
-.snake-game {
-    border: 5px solid blue;
-    height: 300px;
+.app {
     margin: 50px auto;
     width: 300px;
+}
+
+.snake-game {
+    box-sizing: border-box;
+    border: 5px solid blue;
+    height: 300px;
     position: relative;
+}
+
+.snake-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.btn {
+    background: #76d1f3;
+    border: 0 none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    padding: 8px 24px;
+}
+
+.btn:hover,
+.btn:focus {
+    background: #4d99b5;
 }
