@@ -1,6 +1,7 @@
 import Point from './Point.ts';
 import SnakeFigure from './SnakeFigure.ts';
 import Direction from './Direction.ts';
+import Food from './Food.ts';
 
 interface ISnake {
   btnStart: any;
@@ -13,11 +14,15 @@ class Snake implements ISnake {
   btnStart: any;
   btnPause: any;
   interval: number;
+  food: any;
+  snakeGame: any;
 
   constructor() {
+    this.snakeGame = document.querySelector('.snake-game');
     this.btnStart = document.querySelector('#btnStart');
     this.btnPause = document.querySelector('#btnPause');
     this.interval = 0;
+    this.food = new Food();
 
     this.init();
   }
@@ -27,23 +32,40 @@ class Snake implements ISnake {
     this.start();
     this.pause();
   }
+  
+  createFood() {
+    const food = this.food.randomNumber();
+    this.snakeGame.append(food.render());
+  }
+
+  eatFood() {
+    const snakeLastItem = this.snake.getLastItem();
+    if(snakeLastItem.x === this.food.x && snakeLastItem.y === this.food.y) {
+      this.snake.addItem();
+      this.createFood();
+    }
+  }
 
   startPoint() {
     this.point = new Point(30, 30);
     this.snake = new SnakeFigure(Direction.RIGHT);
-    this.snake.drawSnakeList(this.point, 5);
+    this.snake.drawSnakeList(this.point, 10);
     this.snake.init();
   }
 
   start() {
+    this.createFood();
     this.btnStart.addEventListener("click", () => {
       this.interval = setInterval(() => {
         const res = this.snake.move();
+        this.snakeGame.append(this.food.render());
+        this.eatFood();
         if(!res) {
           clearInterval(this.interval);
           this.startPoint();
+          this.createFood();
         }
-      }, 500);
+      }, 100);
     });
   }
 

@@ -11,10 +11,11 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-
+    "lib": ["es6", "DOM"],
+    "target": "es5",
     "alwaysStrict": false,
     "strictFunctionTypes": false,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src/**/*"

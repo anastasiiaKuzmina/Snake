@@ -1,4 +1,6 @@
 import Direction from './Direction.ts';
+import * as constant from "./Constants";
+import createElement from "./CreateElement";
 
 interface IPoint {
   x: number;
@@ -16,30 +18,23 @@ class Point implements IPoint {
 
   move(offset: number, direction: any) {
     if(direction === Direction.RIGHT) {
-      this.x = this.x + (offset * 5);
+      this.x = this.x + (offset * constant.POINT_SIZE);
     }
     else if(direction === Direction.LEFT) {
-      this.x = this.x - (offset * 5);
+      this.x = this.x - (offset * constant.POINT_SIZE);
     }
     else if(direction === Direction.UP)
     {
-      this.y = this.y - (offset * 5);
+      this.y = this.y - (offset * constant.POINT_SIZE);
     }
     else if(direction === Direction.DOWN)
     {
-      this.y = this.y + (offset * 5);
+      this.y = this.y + (offset * constant.POINT_SIZE);
     }
   }
 
   render() {
-    const posX = this.x;
-    const posY = this.y;
-    const elem = document.createElement('div');
-    elem.style.cssText = "background-color: red; border: 1px solid white; height: 5px; width: 5px; position: absolute;";
-    elem.style.left = posX + "px";
-    elem.style.top = posY + "px";
-
-    return elem;
+    return createElement(this, 'red');
   }
 }
 

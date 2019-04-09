@@ -31,7 +31,7 @@ class SnakeFigure implements ISnakeFigure {
       this.snakeList.push(this.point);
     }
 
-    this.render(this.snakeList);
+    this.render();
     return this.snakeList;
   }
 
@@ -40,7 +40,7 @@ class SnakeFigure implements ISnakeFigure {
     const nextItem = this.nextItem();
     this.snakeList.push(nextItem);
 
-    this.render(this.snakeList);
+    this.render();
 
     return this.compare();
   }
@@ -52,49 +52,50 @@ class SnakeFigure implements ISnakeFigure {
     } else if (e === 40) {
       this.direction = Direction.DOWN;
     } else if (e === 37) {
-      this.direction = Direction.LEFT;
+      if (this.direction !== Direction.RIGHT) {
+        this.direction = Direction.LEFT;
+      }
     } else if (e === 39) {
       this.direction = Direction.RIGHT;
     }
   };
 
   nextItem() {
-    const lastItem = this.snakeList[this.snakeList.length - 1];
+    const lastItem = this.getLastItem();
     const nextPoint = new Point(lastItem.x, lastItem.y);
     nextPoint.move(1, this.direction);
-
+    
     return nextPoint;
   }
 
-  render(list: any) {
+  addItem() {
+    return this.snakeList.push(this.nextItem());
+  }
+
+  render() {
     this.snakeGame.innerHTML = "";
 
-    list.forEach((item: any) => {
+    this.snakeList.forEach((item: any) => {
       this.snakeGame.append(item.render());
     });
   }
 
-  compareWithItems(lastItem: any){
-    this.snakeList.forEach((item: any) => {
-      if(item.x === lastItem.x){
-
-      }
-    });
-  }
-  
   compare() {
     const coordinate = this.snakeGame.getBoundingClientRect();
-    const lastItem = this.snakeList[this.snakeList.length - 1];
-    // const newArr = this.snakeList.slice(1, this.snakeList.length - 1);
+    const lastItem = this.getLastItem();
+    let flag = true;
 
-    // newArr.map((item: any) => item.x === lastItem.x);
-
-    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= coordinate.width - 15 || lastItem.y >= coordinate.height - 15) {
+    const test = this.snakeList.slice(0, -1).find((item: any) => lastItem.x === item.x && lastItem.y === item.y);
+    
+    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= coordinate.width - 15 || lastItem.y >= coordinate.height - 15 || test) {
       alert('game over');
-      return false;
-    } else {
-      return true;
+      flag = false;
     }
+    return flag;
+  }
+
+  getLastItem() {
+    return this.snakeList[this.snakeList.length - 1];
   }
 }
 

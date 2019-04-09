@@ -1,6 +1,5 @@
-// import Point from './Point.ts';
-// import SnakeFigure from './SnakeFigure.ts';
-// import Direction from './Direction.ts';
+import * as constant from "./Constants";
+import createElement from "./CreateElement";
 
 interface IFood {
   x: number;
@@ -11,20 +10,22 @@ class Food implements IFood {
   x: number;
   y: number;
 
-  constructor(axisX: number, axisY: number) {
-    this.x = axisX;
-    this.y = axisY;
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+  }
+
+  randomNumber() {
+    const max = 280;
+    const min = 0;
+    this.x = Math.floor(Math.floor(Math.random() * (max + 1) - min) / constant.POINT_SIZE) * constant.POINT_SIZE;
+    this.y = Math.floor(Math.floor(Math.random() * (max + 1) - min) / constant.POINT_SIZE) * constant.POINT_SIZE;
+
+    return this;
   }
 
   render() {
-    const posX = this.x;
-    const posY = this.y;
-    const elem = document.createElement('div');
-    elem.style.cssText = "background-color: green; border: 1px solid white; border-radius: 50%; height: 5px; width: 5px; position: absolute;";
-    elem.style.left = posX + "px";
-    elem.style.top = posY + "px";
-
-    return elem;
+    return createElement(this, 'green');
   }
 }
 
