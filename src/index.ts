@@ -1,11 +1,11 @@
-import Snake from './components/snake.ts';
+import Game from './components/Game.ts';
 import './styles/style.css';
 
 class App {
-  snake: any;
+  game: any;
   
   constructor() {
-    this.snake = new Snake();
+    this.game = new Game();
   }
 }
 

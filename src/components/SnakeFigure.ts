@@ -1,12 +1,12 @@
-import Point from './Point.ts';
 import Direction from './Direction.ts';
+import Point from './Point.ts';
 
-interface ISnakeFigure {
+interface ISnake {
   x: number;
   y: number;
 }
 
-class SnakeFigure implements ISnakeFigure {
+class Snake implements ISnake {
   private snakeList: Array<any>;
   x: number;
   y: number;
@@ -42,21 +42,27 @@ class SnakeFigure implements ISnakeFigure {
 
     this.render();
 
-    return this.compare();
+    return this.gameOver();
   }
 
   handleKey = (event: any) => {
     const e = event.keyCode;
     if (e === 38) {
-      this.direction = Direction.UP;
+      if (this.direction !== Direction.DOWN) {
+        this.direction = Direction.UP;
+      }
     } else if (e === 40) {
-      this.direction = Direction.DOWN;
+      if (this.direction !== Direction.UP) {
+        this.direction = Direction.DOWN;
+      }
     } else if (e === 37) {
       if (this.direction !== Direction.RIGHT) {
         this.direction = Direction.LEFT;
       }
     } else if (e === 39) {
-      this.direction = Direction.RIGHT;
+      if (this.direction !== Direction.LEFT) {
+        this.direction = Direction.RIGHT;
+      }
     }
   };
 
@@ -80,17 +86,17 @@ class SnakeFigure implements ISnakeFigure {
     });
   }
 
-  compare() {
+  gameOver() {
     const coordinate = this.snakeGame.getBoundingClientRect();
     const lastItem = this.getLastItem();
+    const item = this.snakeList.slice(0, -1).find((item: any) => lastItem.x === item.x && lastItem.y === item.y);
     let flag = true;
 
-    const test = this.snakeList.slice(0, -1).find((item: any) => lastItem.x === item.x && lastItem.y === item.y);
-    
-    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= coordinate.width - 15 || lastItem.y >= coordinate.height - 15 || test) {
+    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= coordinate.width - 15 || lastItem.y >= coordinate.height - 15 || item) {
       alert('game over');
       flag = false;
     }
+
     return flag;
   }
 
@@ -99,4 +105,4 @@ class SnakeFigure implements ISnakeFigure {
   }
 }
 
-export default SnakeFigure;
+export default Snake;

@@ -1,14 +1,14 @@
-import Point from './Point.ts';
-import SnakeFigure from './SnakeFigure.ts';
 import Direction from './Direction.ts';
 import Food from './Food.ts';
+import Point from './Point.ts';
+import Snake from './SnakeFigure.ts';
 
-interface ISnake {
+interface IGame {
   btnStart: any;
   btnPause: any;
 }
 
-class Snake implements ISnake {
+class Game implements IGame {
   point: any;
   snake: any;
   btnStart: any;
@@ -48,7 +48,7 @@ class Snake implements ISnake {
 
   startPoint() {
     this.point = new Point(30, 30);
-    this.snake = new SnakeFigure(Direction.RIGHT);
+    this.snake = new Snake(Direction.RIGHT);
     this.snake.drawSnakeList(this.point, 10);
     this.snake.init();
   }
@@ -76,4 +76,4 @@ class Snake implements ISnake {
   }
 }
 
-export default Snake;
+export default Game;
