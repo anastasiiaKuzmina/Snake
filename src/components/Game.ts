@@ -9,6 +9,7 @@ interface IGame {
 }
 
 class Game implements IGame {
+  // Try to reduce number of `any` types, the main idea of TypeScript is to provide sctrict typization to reduce issues propablity
   point: any;
   snake: any;
   btnStart: any;
