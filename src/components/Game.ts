@@ -41,6 +41,8 @@ class Game implements IGame {
 
   eatFood() {
     const snakeLastItem = this.snake.getLastItem();
+    // this.food.isEaten(snakeLastItem)
+    // In this manner you can make x / y private forever
     if(snakeLastItem.x === this.food.x && snakeLastItem.y === this.food.y) {
       this.snake.addItem();
       this.createFood();
