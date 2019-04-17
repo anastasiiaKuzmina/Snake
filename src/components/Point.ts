@@ -2,14 +2,9 @@ import Direction from './Direction.ts';
 import * as constant from "./Constants";
 import createElement from "./CreateElement";
 
-interface IPoint {
-  x: number;
-  y: number;
-}
-
-class Point implements IPoint {
-  x: number;
-  y: number;
+class Point {
+  private x: number;
+  private y: number;
 
   constructor(axisX: number, axisY: number) {
     this.x = axisX;

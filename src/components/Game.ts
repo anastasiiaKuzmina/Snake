@@ -23,7 +23,6 @@ class Game implements IGame {
     this.btnStart = document.querySelector('#btnStart');
     this.btnPause = document.querySelector('#btnPause');
     this.interval = 0;
-    this.food = new Food();
 
     this.init();
   }
@@ -35,15 +34,13 @@ class Game implements IGame {
   }
   
   createFood() {
-    const food = this.food.randomNumber();
-    this.snakeGame.append(food.render());
+    this.food = new Food();
+    this.snakeGame.append(this.food.render());
   }
 
   eatFood() {
     const snakeLastItem = this.snake.getLastItem();
-    // this.food.isEaten(snakeLastItem)
-    // In this manner you can make x / y private forever
-    if(snakeLastItem.x === this.food.x && snakeLastItem.y === this.food.y) {
+    if(this.food.isEaten(snakeLastItem)) {
       this.snake.addItem();
       this.createFood();
     }

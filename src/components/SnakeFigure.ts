@@ -2,17 +2,16 @@ import Direction from './Direction.ts';
 import Point from './Point.ts';
 
 interface ISnake {
-  x: number;
-  y: number;
+  direction: any;
+  point: any;
+  snakeGame: any;
 }
 
 class Snake implements ISnake {
   private snakeList: Array<any>;
-  x: number;
-  y: number;
   direction: any;
-  snakeGame: any;
   point: any;
+  snakeGame: any;
 
   constructor(direction: any) {
     this.snakeGame = document.querySelector('.snake-game');
