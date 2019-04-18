@@ -4,15 +4,15 @@ declare interface IPoint {
 }
 
 declare interface IFood {
-  isEaten: (item: any) => boolean,
+  isEaten: (item: IPoint) => boolean,
   render: () => HTMLDivElement,
 }
 
 declare interface ISnake {
-  addItem: () => Array,
-  getLastItem: () => Object,
+  addItem: () => number,
+  getLastItem: () => IPoint,
   init: () => void,
-  initSnakeList: (length: number) => Object,
+  initSnakeList: (length: number) => Array<IPoint>,
   move: () => boolean,
 }
 
