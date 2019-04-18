@@ -1,8 +1,8 @@
-import Direction from './Direction.ts';
+import Direction from './Direction';
 import * as constant from "./Constants";
 import createElement from "./CreateElement";
 
-class Point {
+class Point implements IPoint {
   private x: number;
   private y: number;
 

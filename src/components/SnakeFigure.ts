@@ -1,11 +1,5 @@
-import Direction from './Direction.ts';
-import Point from './Point.ts';
-
-interface ISnake {
-  direction: any;
-  point: any;
-  snakeGame: any;
-}
+import Direction from './Direction';
+import Point from './Point';
 
 class Snake implements ISnake {
   private snakeList: Array<any>;
@@ -23,9 +17,9 @@ class Snake implements ISnake {
     document.onkeydown = this.handleKey;
   }
 
-  drawSnakeList(startPoint: any, length: number) {
+  initSnakeList(length: number) {
     for(let i = 0; i < length; i++) {
-      this.point = new Point(startPoint.x, startPoint.y);
+      this.point = new Point(30, 30);
       this.point.move(i, this.direction);
       this.snakeList.push(this.point);
     }
@@ -44,7 +38,15 @@ class Snake implements ISnake {
     return this.gameOver();
   }
 
-  handleKey = (event: any) => {
+  addItem() {
+    return this.snakeList.push(this.nextItem());
+  }
+
+  getLastItem() {
+    return this.snakeList[this.snakeList.length - 1];
+  }
+
+  private handleKey = (event: any) => {
     const e = event.keyCode;
     if (e === 38) {
       if (this.direction !== Direction.DOWN) {
@@ -65,7 +67,7 @@ class Snake implements ISnake {
     }
   };
 
-  nextItem() {
+  private nextItem() {
     const lastItem = this.getLastItem();
     const nextPoint = new Point(lastItem.x, lastItem.y);
     nextPoint.move(1, this.direction);
@@ -73,11 +75,7 @@ class Snake implements ISnake {
     return nextPoint;
   }
 
-  addItem() {
-    return this.snakeList.push(this.nextItem());
-  }
-
-  render() {
+  private render() {
     this.snakeGame.innerHTML = "";
 
     this.snakeList.forEach((item: any) => {
@@ -85,7 +83,7 @@ class Snake implements ISnake {
     });
   }
 
-  gameOver() {
+  private gameOver() {
     const coordinate = this.snakeGame.getBoundingClientRect();
     const lastItem = this.getLastItem();
     const item = this.snakeList.slice(0, -1).find((item: any) => lastItem.x === item.x && lastItem.y === item.y);
@@ -97,10 +95,6 @@ class Snake implements ISnake {
     }
 
     return flag;
-  }
-
-  getLastItem() {
-    return this.snakeList[this.snakeList.length - 1];
   }
 }
 

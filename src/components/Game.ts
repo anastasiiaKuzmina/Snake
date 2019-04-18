@@ -1,21 +1,13 @@
-import Direction from './Direction.ts';
-import Food from './Food.ts';
-import Point from './Point.ts';
-import Snake from './SnakeFigure.ts';
-
-interface IGame {
-  btnStart: any;
-  btnPause: any;
-}
+import Direction from './Direction';
+import Food from './Food';
+import Snake from './SnakeFigure';
 
 class Game implements IGame {
-  // Try to reduce number of `any` types, the main idea of TypeScript is to provide sctrict typization to reduce issues propablity
-  point: any;
-  snake: any;
-  btnStart: any;
   btnPause: any;
+  btnStart: any;
+  food: IFood;
   interval: number;
-  food: any;
+  snake: ISnake;
   snakeGame: any;
 
   constructor() {
@@ -33,12 +25,12 @@ class Game implements IGame {
     this.pause();
   }
   
-  createFood() {
+  private createFood() {
     this.food = new Food();
     this.snakeGame.append(this.food.render());
   }
 
-  eatFood() {
+  private eatFood() {
     const snakeLastItem = this.snake.getLastItem();
     if(this.food.isEaten(snakeLastItem)) {
       this.snake.addItem();
@@ -46,14 +38,13 @@ class Game implements IGame {
     }
   }
 
-  startPoint() {
-    this.point = new Point(30, 30);
+  private startPoint() {
     this.snake = new Snake(Direction.RIGHT);
-    this.snake.drawSnakeList(this.point, 10);
+    this.snake.initSnakeList(10);
     this.snake.init();
   }
 
-  start() {
+  private start() {
     this.createFood();
     this.btnStart.addEventListener("click", () => {
       this.interval = setInterval(() => {
@@ -69,7 +60,7 @@ class Game implements IGame {
     });
   }
 
-  pause() {
+  private pause() {
     this.btnPause.addEventListener("click", () => {
       clearInterval(this.interval);
     });

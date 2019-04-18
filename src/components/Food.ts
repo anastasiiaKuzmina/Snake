@@ -1,16 +1,16 @@
 import * as constant from "./Constants";
 import createElement from "./CreateElement";
 
-class Food {
+class Food implements IFood {
   private readonly x: number;
   private readonly y: number;
-  
+
   constructor() {
     this.x = this.randomNumber();
     this.y = this.randomNumber();
   }
 
-  randomNumber() {
+  private randomNumber() {
     const randomNumber = Math.random() * 280;
     return Math.floor(randomNumber / constant.POINT_SIZE) * constant.POINT_SIZE;
   }
