@@ -15,8 +15,8 @@ class Food implements IFood {
     return Math.floor(randomNumber / constant.POINT_SIZE) * constant.POINT_SIZE;
   }
   
-  isEaten(item: any){
-    return item.x === this.x && item.y === this.y;
+  isEaten(item: IPoint){
+    return item.equal(this.x, this.y);
   }
 
   render() {

@@ -1,5 +1,8 @@
+
 declare interface IPoint {
-  move: (offset: number, direction: any) => void,
+  compare: (item: IPoint) => boolean
+  equal: (x: number, y: number) => boolean
+  move: (offset: number, direction: Direction) => void,
   render: () => HTMLDivElement,
 }
 

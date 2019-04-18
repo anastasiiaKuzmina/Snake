@@ -3,17 +3,17 @@ import Food from './Food';
 import Snake from './SnakeFigure';
 
 class Game implements IGame {
-  btnPause: any;
-  btnStart: any;
+  btnPause: HTMLButtonElement;
+  btnStart: HTMLButtonElement;
   food: IFood;
   interval: number;
   snake: ISnake;
-  snakeGame: any;
+  snakeGame: HTMLElement;
 
   constructor() {
-    this.snakeGame = document.querySelector('.snake-game');
-    this.btnStart = document.querySelector('#btnStart');
-    this.btnPause = document.querySelector('#btnPause');
+    this.snakeGame = document.querySelector('.snake-game') as HTMLElement;
+    this.btnStart = document.querySelector('#btnStart') as HTMLButtonElement;
+    this.btnPause = document.querySelector('#btnPause') as HTMLButtonElement;
     this.interval = 0;
 
     this.init();

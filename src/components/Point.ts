@@ -11,7 +11,7 @@ class Point implements IPoint {
     this.y = axisY;
   }
 
-  move(offset: number, direction: any) {
+  move(offset: number, direction: Direction) {
     if(direction === Direction.RIGHT) {
       this.x = this.x + (offset * constant.POINT_SIZE);
     }
@@ -26,6 +26,17 @@ class Point implements IPoint {
     {
       this.y = this.y + (offset * constant.POINT_SIZE);
     }
+  }
+
+  equal(x: number, y: number) {
+    if (x === this.x && y === this.y) {
+      return true;
+    }
+    return false;
+  }
+
+  compare(item: IPoint) {
+    return item.equal(this.x, this.y);
   }
 
   render() {
