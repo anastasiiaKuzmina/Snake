@@ -40,7 +40,7 @@ class Point implements IPoint {
   }
 
   render() {
-    return createElement(this, 'red');
+    return createElement(this.x, this.y, 'red');
   }
 }
 

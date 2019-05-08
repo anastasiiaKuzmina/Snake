@@ -20,7 +20,7 @@ class Food implements IFood {
   }
 
   render() {
-    return createElement(this, 'green');
+    return createElement(this.x, this.y, 'green');
   }
 }
 
