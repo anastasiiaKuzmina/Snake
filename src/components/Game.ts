@@ -1,29 +1,20 @@
-import Direction from './Direction.ts';
-import Food from './Food.ts';
-import Point from './Point.ts';
-import Snake from './SnakeFigure.ts';
-
-interface IGame {
-  btnStart: any;
-  btnPause: any;
-}
+import Direction from './Direction';
+import Food from './Food';
+import Snake from './SnakeFigure';
 
 class Game implements IGame {
-  // Try to reduce number of `any` types, the main idea of TypeScript is to provide sctrict typization to reduce issues propablity
-  point: any;
-  snake: any;
-  btnStart: any;
-  btnPause: any;
+  btnPause: HTMLButtonElement;
+  btnStart: HTMLButtonElement;
+  food: IFood;
   interval: number;
-  food: any;
-  snakeGame: any;
+  snake: ISnake;
+  snakeGame: HTMLElement;
 
   constructor() {
-    this.snakeGame = document.querySelector('.snake-game');
-    this.btnStart = document.querySelector('#btnStart');
-    this.btnPause = document.querySelector('#btnPause');
+    this.snakeGame = document.querySelector('.snake-game') as HTMLElement;
+    this.btnStart = document.querySelector('#btnStart') as HTMLButtonElement;
+    this.btnPause = document.querySelector('#btnPause') as HTMLButtonElement;
     this.interval = 0;
-    this.food = new Food();
 
     this.init();
   }
@@ -34,29 +25,26 @@ class Game implements IGame {
     this.pause();
   }
   
-  createFood() {
-    const food = this.food.randomNumber();
-    this.snakeGame.append(food.render());
+  private createFood() {
+    this.food = new Food();
+    this.snakeGame.append(this.food.render());
   }
 
-  eatFood() {
+  private eatFood() {
     const snakeLastItem = this.snake.getLastItem();
-    // this.food.isEaten(snakeLastItem)
-    // In this manner you can make x / y private forever
-    if(snakeLastItem.x === this.food.x && snakeLastItem.y === this.food.y) {
+    if(this.food.isEaten(snakeLastItem)) {
       this.snake.addItem();
       this.createFood();
     }
   }
 
-  startPoint() {
-    this.point = new Point(30, 30);
+  private startPoint() {
     this.snake = new Snake(Direction.RIGHT);
-    this.snake.drawSnakeList(this.point, 10);
+    this.snake.initSnakeList(10);
     this.snake.init();
   }
 
-  start() {
+  private start() {
     this.createFood();
     this.btnStart.addEventListener("click", () => {
       this.interval = setInterval(() => {
@@ -72,7 +60,7 @@ class Game implements IGame {
     });
   }
 
-  pause() {
+  private pause() {
     this.btnPause.addEventListener("click", () => {
       clearInterval(this.interval);
     });
