@@ -1,12 +1,17 @@
+import { ctx } from './Constants';
+
 const createElement = (x: number, y: number, color: string) => {
   const posX = x;
   const posY = y;
-  const elem = document.createElement('div');
-  elem.style.cssText = `background-color: ${color}; border: 1px solid white; height: 5px; width: 5px; position: absolute;`;
-  elem.style.left = posX + "px";
-  elem.style.top = posY + "px";
+  const width = 5;
+  const height = 5;
 
-  return elem;
+  ctx.beginPath();
+  ctx.strokeStyle  = 'white';
+  ctx.fillStyle = color;
+  ctx.fillRect(posX, posY, width, height);
+  ctx.stroke();
+  ctx.closePath();
 };
 
 export default createElement;

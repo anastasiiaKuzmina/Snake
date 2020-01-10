@@ -1,14 +1,13 @@
 import Direction from './Direction';
 import Point from './Point';
+import { canvas, ctx } from './Constants';
 
 class Snake implements ISnake {
   private snakeList: Array<any>;
   direction: Direction;
   point: IPoint;
-  snakeGame: HTMLElement;
 
   constructor(direction: Direction) {
-    this.snakeGame = document.querySelector('.snake-game') as HTMLElement;
     this.snakeList = [];
     this.direction = direction;
   }
@@ -19,7 +18,7 @@ class Snake implements ISnake {
 
   initSnakeList(length: number) {
     for(let i = 0; i < length; i++) {
-      this.point = new Point(30, 30);
+      this.point = new Point(10, 10);
       this.point.move(i, this.direction);
       this.snakeList.push(this.point);
     }
@@ -71,25 +70,24 @@ class Snake implements ISnake {
     const lastItem = this.getLastItem();
     const nextPoint = new Point(lastItem.x, lastItem.y);
     nextPoint.move(1, this.direction);
-    
+
     return nextPoint;
   }
 
   private render() {
-    this.snakeGame.innerHTML = "";
+    ctx.clearRect(0, 0, 400, 400);
 
     this.snakeList.forEach((item: IPoint) => {
-      this.snakeGame.append(item.render());
+      item.render();
     });
   }
 
   private gameOver() {
-    const coordinate = this.snakeGame.getBoundingClientRect();
     const lastItem = this.getLastItem();
     const item = this.snakeList.slice(0, -1).find((item: IPoint) => lastItem.compare(item));
     let flag = true;
 
-    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= coordinate.width - 15 || lastItem.y >= coordinate.height - 15 || item) {
+    if(lastItem.x <= 0 || lastItem.y <= 0 || lastItem.x >= canvas.width || lastItem.y >= canvas.height || item) {
       alert('game over');
       flag = false;
     }

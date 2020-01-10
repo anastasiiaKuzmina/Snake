@@ -3,12 +3,12 @@ declare interface IPoint {
   compare: (item: IPoint) => boolean
   equal: (x: number, y: number) => boolean
   move: (offset: number, direction: Direction) => void,
-  render: () => HTMLDivElement,
+  render: () => void,
 }
 
 declare interface IFood {
   isEaten: (item: IPoint) => boolean,
-  render: () => HTMLDivElement,
+  render: () => void,
 }
 
 declare interface ISnake {

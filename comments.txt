@@ -1,0 +1,51 @@
+interface should describe public method and properties
+
+class Food {
+  // use private modifier for properties,
+  // if you need to reach them from outside, then create getters / setters
+  private readonly x: number;
+  private readonly y: number;
+
+  get coordinateX() {
+    return this.x;
+  }
+
+  get coordinateY() {
+    return this.y;
+  }
+
+  randomNumber() {
+    const randomNumber = Math.random() * 280;
+    return Math.floor(randomNumber / constant.POINT_SIZE) * constant.POINT_SIZE;
+  }
+
+  constructor() {
+    this.x = this.randomNumber();
+    this.y = this.randomNumber();
+  }
+
+  // We can try to use Food class using create / destroy strategy
+  // In this case after the Food eaten we remove old object, and create a new instance of Food class
+  // After that we will be able to remove randomNumber method, and generate coords under constuctor and make x / y as readonly
+
+  isEaten(item: any){
+    return item.x === this.x && item.y === this.y;
+  }
+
+  render() {
+    console.log('hi');
+    return createElement(this, 'green');
+  }
+}
+
+export default Food;
+
+eatFood() {
+    const snakeLastItem = this.snake.getLastItem();
+    // this.food.isEaten(snakeLastItem)
+    // In this manner you can make x / y private forever
+    if(this.food.isEaten(snakeLastItem)) {
+      this.snake.addItem();
+      this.createFood();
+    }
+  }

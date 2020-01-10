@@ -8,13 +8,17 @@ class Game implements IGame {
   food: IFood;
   interval: number;
   snake: ISnake;
-  snakeGame: HTMLElement;
+  score: HTMLElement;
+  sum: number;
+  speed: number;
 
   constructor() {
-    this.snakeGame = document.querySelector('.snake-game') as HTMLElement;
     this.btnStart = document.querySelector('#btnStart') as HTMLButtonElement;
     this.btnPause = document.querySelector('#btnPause') as HTMLButtonElement;
+    this.score = document.querySelector('.score') as HTMLElement;
     this.interval = 0;
+    this.sum = 0;
+    // this.speed = 100;
 
     this.init();
   }
@@ -23,11 +27,32 @@ class Game implements IGame {
     this.startPoint();
     this.start();
     this.pause();
+    this.emptyScore();
   }
-  
+
   private createFood() {
     this.food = new Food();
-    this.snakeGame.append(this.food.render());
+    this.food.render();
+  }
+
+  private emptyScore() {
+    this.score.innerHTML = '0';
+  }
+
+  private totalScore() {
+    this.sum += 10;
+    console.log(this.sum);
+    return this.sum;
+  }
+
+  private ppp() {
+    let speed = 100;
+
+    if(this.totalScore() > 20) {
+      speed = 3000;
+    }
+
+    return speed;
   }
 
   private eatFood() {
@@ -35,6 +60,8 @@ class Game implements IGame {
     if(this.food.isEaten(snakeLastItem)) {
       this.snake.addItem();
       this.createFood();
+
+      this.score.innerHTML = `${this.totalScore()}`;
     }
   }
 
@@ -46,15 +73,18 @@ class Game implements IGame {
 
   private start() {
     this.createFood();
+    console.log(this.ppp());
     this.btnStart.addEventListener("click", () => {
+      // @ts-ignore
       this.interval = setInterval(() => {
         const res = this.snake.move();
-        this.snakeGame.append(this.food.render());
+        this.food.render();
         this.eatFood();
         if(!res) {
           clearInterval(this.interval);
           this.startPoint();
           this.createFood();
+          this.emptyScore();
         }
       }, 100);
     });
