@@ -10,6 +10,7 @@ class Game implements IGame {
   snake: ISnake;
   score: HTMLElement;
   sum: number;
+  speed: number;
 
   constructor() {
     this.btnStart = document.querySelector('#btnStart') as HTMLButtonElement;
@@ -17,6 +18,7 @@ class Game implements IGame {
     this.score = document.querySelector('.score') as HTMLElement;
     this.interval = 0;
     this.sum = 0;
+    this.speed = 100;
 
     this.init();
   }
@@ -39,20 +41,7 @@ class Game implements IGame {
 
   private totalScore() {
     this.sum += 10;
-    return this.sum;
-  }
-
-  private ppp() {
-    let speed;
-
-    if(this.sum > 20) {
-      console.log('ffff');
-      speed = 3000;
-    } else {
-      speed = 100;
-    }
-
-    return speed;
+    this.score.innerHTML = `${this.sum}`;
   }
 
   private eatFood() {
@@ -60,7 +49,7 @@ class Game implements IGame {
     if(this.food.isEaten(snakeLastItem)) {
       this.snake.addItem();
       this.createFood();
-      this.score.innerHTML = `${this.totalScore()}`;
+      this.totalScore();
     }
   }
 
@@ -70,23 +59,29 @@ class Game implements IGame {
     this.snake.init();
   }
 
+  private handleStart() {
+    // @ts-ignore
+    this.interval = setInterval(() => {
+      const res = this.snake.move();
+      this.food.render();
+      this.eatFood();
+      if(this.sum > 50) {
+        this.speed = 60;
+        clearInterval(this.interval);
+        this.handleStart();
+      }
+      if(!res) {
+        clearInterval(this.interval);
+        this.startPoint();
+        this.createFood();
+        this.emptyScore();
+      }
+    }, this.speed);
+  }
+
   private start() {
     this.createFood();
-    console.log(this.ppp());
-    this.btnStart.addEventListener("click", () => {
-      // @ts-ignore
-      this.interval = setInterval(() => {
-        const res = this.snake.move();
-        this.food.render();
-        this.eatFood();
-        if(!res) {
-          clearInterval(this.interval);
-          this.startPoint();
-          this.createFood();
-          this.emptyScore();
-        }
-      }, this.ppp());
-    });
+    this.btnStart.addEventListener("click", () => this.handleStart());
   }
 
   private pause() {
